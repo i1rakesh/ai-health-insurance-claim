@@ -290,21 +290,21 @@ Please upload them before continuing.`,
               </CardContent>
             </Card>
 
-            <Card>
+            {/* <Card>
                <CardHeader>
                 <CardTitle>Explainable Trace</CardTitle>
               </CardHeader>
 
               <CardContent>
                 <TraceCard trace={result.trace} />
-              </CardContent> 
+              </CardContent>  */}
 
               {result && (
                 <AIExplanationCard
                   result={result}
                 />
               )}
-            </Card>
+            {/* </Card> */}
           </>
         )}
       </div>
