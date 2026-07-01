@@ -7,9 +7,9 @@ export async function GET() {
 
   for (const tc of testData.test_cases) {
     try {
-      const diagnosisDocument = tc.input.documents.find(
-        (d: any) => d.content?.diagnosis
-      );
+      const documents = tc.input.documents as any[];
+
+      const diagnosisDocument = documents.find((d) => d.content?.diagnosis);
 
       const claim = {
         memberId: tc.input.member_id,
@@ -23,32 +23,23 @@ export async function GET() {
 
         diagnosis: diagnosisDocument?.content?.diagnosis,
 
-        hospitalName: tc.input.documents.find(
-          (d: any) => d.content?.hospital_name
-        )?.content?.hospital_name,
-        
-        procedures:
-        tc.input.documents
-            .flatMap((d: any) =>
-            d.content?.line_items ?? []
-            )
-            .map((item: any) => ({
+        hospitalName: documents.find((d) => d.content?.hospital_name)?.content
+          ?.hospital_name,
+
+        procedures: documents
+          .flatMap((d) => d.content?.line_items ?? [])
+          .map((item: any) => ({
             name: item.description,
             amount: item.amount,
-            })),
-        sameDayClaims:
-          tc.input.claims_history?.length ?? 0,
+          })),
 
-        documents: tc.input.documents.map((d: any) => ({
+        sameDayClaims: tc.input.claims_history?.length ?? 0,
+
+        documents: documents.map((d) => ({
           type: d.actual_type,
           expectedType: d.expected_type,
-          readable:
-            d.readable ??
-            (d.quality !== "UNREADABLE"),
-          patientName:
-            d.content?.patient_name ??
-            d.patient_name_on_doc ??
-            null,
+          readable: d.readable ?? d.quality !== "UNREADABLE",
+          patientName: d.content?.patient_name ?? d.patient_name_on_doc ?? null,
         })),
       };
 
@@ -60,8 +51,7 @@ export async function GET() {
         expected: tc.expected.decision ?? "DOCUMENT_ERROR",
         actual: output.decision,
         match:
-          (tc.expected.decision === null &&
-            output.decision === "INCOMPLETE") ||
+          (tc.expected.decision === null && output.decision === "INCOMPLETE") ||
           tc.expected.decision === output.decision,
         trace: output.trace,
       });

@@ -39,7 +39,10 @@ export function evaluatePolicy(claim: any) {
     const member = getMember(claim.memberId);
 
     if (member) {
-      const days = daysBetween(member.join_date, claim.treatmentDate);
+      const days = daysBetween(
+        member.join_date!,
+        claim.treatmentDate!
+      );
 
       if (days < 90) {
         return {
