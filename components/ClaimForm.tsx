@@ -46,7 +46,8 @@ export default function ClaimForm() {
   //---------------------------------------------
   // Convert file -> base64
   //---------------------------------------------
-
+  
+  
   function fileToBase64(file: File) {
     return new Promise<string>((resolve, reject) => {
       const reader = new FileReader();

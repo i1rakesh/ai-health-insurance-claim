@@ -61,6 +61,8 @@ Schema:
 Rules:
 
 - confidence between 0 and 1
+- Dates must always be returned in YYYY-MM-DD format.
+- Example: 2024-11-01
 - warnings should mention blurry images, unreadable text, missing fields etc.
 - Never explain.
 - Never return markdown.
