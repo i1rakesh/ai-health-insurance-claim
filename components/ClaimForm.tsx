@@ -111,6 +111,9 @@ export default function ClaimForm() {
 
       const extracted = data.extractedData;
       
+      // console.log("Extracted Data:", extracted);
+      // console.log("Extracted Documents:", extracted.documents);
+
       setAiData(extracted);
 
       const gateResponse = await fetch("/api/document-gate", {
@@ -287,13 +290,13 @@ Please upload them before continuing.`,
             </Card>
 
             <Card>
-              {/* <CardHeader>
+               <CardHeader>
                 <CardTitle>Explainable Trace</CardTitle>
               </CardHeader>
 
               <CardContent>
                 <TraceCard trace={result.trace} />
-              </CardContent> */}
+              </CardContent> 
 
               {result && (
                 <AIExplanationCard

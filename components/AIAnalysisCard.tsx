@@ -56,6 +56,12 @@ export default function AIAnalysisCard({
           </div>
 
           <div>
+            <p className="text-gray-500">Treatment Date</p>
+
+            <p>{extracted.treatmentDate || "-"}</p>
+          </div>
+
+          <div>
             <p className="text-gray-500">Amount</p>
 
             <p>₹{extracted.claimedAmount || 0}</p>

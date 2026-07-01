@@ -19,14 +19,22 @@ const REQUIRED: Record<string, string[]> = {
   ],
 };
 
+function normalize(type: string) {
+  return type
+    .trim()
+    .toUpperCase()
+    .replace(/\s+/g, "_");
+}
+
 export function validateDocuments(
   category: string,
   uploaded: any[]
 ) {
-  const required = REQUIRED[category] || [];
+  const required =
+    (REQUIRED[category] || []).map(normalize);
 
-  const uploadedTypes = uploaded.map(
-    (d) => d.documentType
+  const uploadedTypes = uploaded.map((d) =>
+    normalize(d.documentType || "")
   );
 
   const missing = required.filter(
@@ -35,9 +43,7 @@ export function validateDocuments(
 
   return {
     success: missing.length === 0,
-
     missing,
-
     uploaded: uploadedTypes,
   };
 }
